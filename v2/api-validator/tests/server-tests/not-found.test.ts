@@ -2,9 +2,9 @@ import { randomUUID } from 'crypto';
 import { JsonValue } from 'type-fest';
 import { fakeObject } from '../faker';
 import Client from '../../src/client';
-import { hasCapability } from '../utils/capable-accounts';
+import {ApiComponents, ApiError, GeneralError} from '../../src/client/generated';
 import { EndpointSchema, getAllEndpointSchemas } from '../../src/schemas';
-import { ApiComponents, ApiError, GeneralError } from '../../src/client/generated';
+import {hasCapability} from "../utils/capable-accounts";
 
 describe('Not Found tests', () => {
   describe.each(getParamEndpoints())('$method $url', ({ method, operationId, schema }) => {
@@ -28,7 +28,7 @@ describe('Not Found tests', () => {
       if (method === 'POST') {
         requestBody = fakeObject(schema.body);
 
-        if (requestBody && Object.hasOwn(requestBody, 'idempotencyKey')) {
+        if (requestBody?.['idempotencyKey']) {
           requestBody['idempotencyKey'] = randomUUID();
         }
       }
@@ -61,7 +61,7 @@ describe('Not Found tests', () => {
 
 function getParamEndpoints(): EndpointSchema[] {
   return getAllEndpointSchemas().filter((endpoint) => {
-    const [capability] = endpoint.schema.tags;
-    return !!endpoint.schema.params && hasCapability(capability as keyof ApiComponents);
+    const [capability] = endpoint.schema.tags
+    return !!endpoint.schema.params && hasCapability(capability as keyof ApiComponents)
   });
 }

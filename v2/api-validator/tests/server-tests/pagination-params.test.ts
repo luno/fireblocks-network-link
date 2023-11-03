@@ -11,6 +11,7 @@ import {
   PaginationStartingAfter,
   RequestPart,
 } from '../../src/client/generated';
+import {getCapableAccountId, hasCapability} from "../utils/capable-accounts";
 
 type PaginationParams = {
   limit?: PaginationLimit;
@@ -33,6 +34,14 @@ describe('Pagination params tests', () => {
 
       if (params && Object.hasOwn(params, 'accountId')) {
         params.accountId = getCapableAccountId(schema.tags[0] as keyof ApiComponents);
+      }
+
+      try {
+        if (params !== undefined) {
+          params.accountId = getCapableAccountId(schema.tags[0] as keyof ApiComponents)
+        }
+      } catch (e) {
+        // no capable account, use faked account
       }
 
       try {

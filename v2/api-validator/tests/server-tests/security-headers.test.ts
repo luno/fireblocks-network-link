@@ -12,6 +12,7 @@ import {
   RequestPart,
   UnauthorizedError,
 } from '../../src/client/generated';
+import {hasCapability} from "../utils/capable-accounts";
 
 type HeadersGenerator = (options: AxiosRequestConfig) => SecurityHeaders;
 

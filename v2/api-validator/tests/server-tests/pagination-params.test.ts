@@ -32,7 +32,7 @@ describe('Pagination params tests', () => {
       const querystring = fakeObject(schema.querystring);
       const params = fakeObject(schema.params);
 
-      if (params !== undefined && Object.prototype.hasOwnProperty.call(params, 'accountId')) {
+      if (params !== undefined && params.hasOwnProperty('accountId')) {
         params.accountId = getCapableAccountId(schema.tags[0] as keyof ApiComponents);
       }
 

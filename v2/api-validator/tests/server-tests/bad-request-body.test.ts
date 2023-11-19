@@ -5,9 +5,8 @@ import ApiClient from '../../src/client';
 import { JSONSchemaFaker, Schema } from 'json-schema-faker';
 import { EndpointSchema, getAllEndpointSchemas } from '../../src/schemas';
 import { deleteDeepProperty, getPropertyPaths } from '../property-extraction';
-import { ApiComponents, ApiError, BadRequestError, RequestPart } from '../../src/client/generated';
 import { getCapableAccountId, hasCapability } from '../utils/capable-accounts';
-import { randomUUID } from 'crypto';
+import { ApiComponents, ApiError, BadRequestError, RequestPart } from '../../src/client/generated';
 
 JSONSchemaFaker.option('requiredOnly', true);
 
@@ -53,7 +52,7 @@ describe('Test request bodies missing one required property', () => {
             const badBody = _.cloneDeep(goodBody);
             deleteDeepProperty(badBody, propertyPath);
 
-            if (badBody.hasOwnProperty('idempotencyKey')) {
+            if (Object.hasOwn(badBody, 'idempotencyKey')) {
               badBody['idempotencyKey'] = randomUUID();
             }
 

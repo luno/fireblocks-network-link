@@ -139,6 +139,7 @@ describe.skipIf(noTradingCapability)('Trading API tests', () => {
       beforeAll(async () => {
         const ordersCount = 10;
         for (let i = 0; i < ordersCount; i++) {
+          console.log(Date.now())
           console.log("generate order at " + i)
           const orderCandidate = await generateValidOrder(LIMIT, books, balances);
           if (!orderCandidate) {

@@ -139,6 +139,7 @@ describe.skipIf(noTradingCapability)('Trading API tests', () => {
       beforeAll(async () => {
         const ordersCount = 10;
         for (let i = 0; i < ordersCount; i++) {
+          console.log("generate order at " + i)
           const orderCandidate = await generateValidOrder(LIMIT, books, balances);
           if (!orderCandidate) {
             throw new Error(
@@ -304,6 +305,7 @@ async function generateValidLimitOrder(books: OrderBook[], balances: AssetBalanc
   const client = new ApiClient();
 
   for (const book of books) {
+    console.log("get book bids for " + book.id)
     const bidsResponse = await client.trading.getBookBids({
       id: encodeURIComponent(book.id),
       limit: 1,

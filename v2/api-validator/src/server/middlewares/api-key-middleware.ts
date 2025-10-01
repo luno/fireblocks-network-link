@@ -2,6 +2,7 @@ import { IncomingHttpHeaders } from 'http';
 import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
 import config from '../../config';
 import { UnauthorizedError } from '../../client/generated';
+import { timingSafeEqual } from 'crypto';
 
 const INVALID_API_KEY_ERROR: UnauthorizedError = {
   message: 'Provided API key is not authorized',
@@ -31,5 +32,5 @@ function getApiKeyFromHeaders(headers: IncomingHttpHeaders): string {
 
 function isApiKeyValid(apiKey): boolean {
   const configuredApiKey = config.get('authentication').apiKey;
-  return apiKey === configuredApiKey;
+  return timingSafeEqual(Buffer.from(apiKey), Buffer.from(configuredApiKey));
 }
